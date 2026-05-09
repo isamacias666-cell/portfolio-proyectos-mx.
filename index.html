@@ -2,25 +2,121 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Portafolio de Datos | Isai Macías</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Portfolio | Isai Macías</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #0f2027; color: white; text-align: center; padding: 50px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1100px; margin: 40px auto; }
-        .card { background: #203a43; padding: 25px; border-radius: 15px; text-decoration: none; color: white; border: 2px solid #2ecc71; transition: 0.3s; }
-        .card:hover { background: #2c5364; transform: translateY(-10px); border-color: #00f2fe; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        h1 { color: #2ecc71; font-size: 2.5em; }
-        .desc { font-size: 0.9em; color: #bdc3c7; margin-top: 10px; display: block; }
+        :root {
+            --bg: #0b0e14;
+            --card-bg: #161b22;
+            --accent: #2ecc71;
+            --text-main: #e6edf3;
+            --text-dim: #8b949e;
+        }
+        body { 
+            font-family: 'Segoe UI', system-ui, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main); 
+            margin: 0; padding: 40px 20px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        header { max-width: 900px; text-align: center; margin-bottom: 50px; }
+        h1 { font-size: 2.5rem; margin-bottom: 10px; background: linear-gradient(90deg, #2ecc71, #00f2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { color: var(--text-dim); font-size: 1.1rem; }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            width: 100%;
+        }
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .project-card h2 { font-size: 1.25rem; margin: 0 0 12px 0; color: var(--accent); }
+        .project-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.5; margin-bottom: 20px; }
+        .tag-container { display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag { 
+            background: rgba(46, 204, 113, 0.1); 
+            color: var(--accent); 
+            padding: 4px 10px; 
+            border-radius: 20px; 
+            font-size: 0.75rem; 
+            font-weight: 600;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
     </style>
 </head>
 <body>
-    <h1>📊 Portafolio de Análisis de Datos</h1>
-    <p>Visualizaciones interactivas de alto impacto para la toma de decisiones</p>
-    <div class="grid">
-        <a href="auditoria.html" class="card">📈 Auditoría Transaccional<span class="desc">Flujo de caja y limpieza de registros.</span></a>
-        <a href="logs.html" class="card">🔍 Diagnóstico de Logs<span class="desc">Detección de errores en tiempo real.</span></a>
-        <a href="crisis.html" class="card">⚠️ Terminal de Crisis P95<span class="desc">Análisis de pérdidas y latencias críticas.</span></a>
-        <a href="calidad.html" class="card">🧼 Data Quality Pipeline<span class="desc">Normalización e integridad de datos.</span></a>
-        <a href="experiencia.html" class="card">🎯 UX & Conversion Funnel<span class="desc">Análisis de comportamiento y ventas.</span></a>
+    <header>
+        <h1>Data Analyst Portfolio</h1>
+        <p class="subtitle">Soluciones de Inteligencia de Negocios y Auditoría de Datos</p>
+    </header>
+
+    <div class="portfolio-grid">
+        <a href="auditoria.html" class="card-link project-card">
+            <div>
+                <h2>📈 Auditoría Transaccional</h2>
+                <p>Monitoreo de ingresos netos y éxito de cruce. Detección proactiva de anomalías operativas.</p>
+            </div>
+            <div class="tag-container">
+                <span class="tag">Finanzas</span><span class="tag">ECharts</span>
+            </div>
+        </a>
+
+        <a href="logs.html" class="card-link project-card">
+            <div>
+                <h2>🔍 Diagnóstico de Logs</h2>
+                <p>Análisis de comportamiento de usuario y detección de fallas en pasarelas de pago por OS.</p>
+            </div>
+            <div class="tag-container">
+                <span class="tag">UX Analytics</span><span class="tag">Debugging</span>
+            </div>
+        </a>
+
+        <a href="crisis.html" class="card-link project-card">
+            <div>
+                <h2>⚠️ Terminal de Crisis P95</h2>
+                <p>Análisis de latencia crítica y cálculo de impacto financiero por degradación de servicios.</p>
+            </div>
+            <div class="tag-container">
+                <span class="tag">Estadística P95</span><span class="tag">Business Impact</span>
+            </div>
+        </a>
+
+        <a href="calidad.html" class="card-link project-card">
+            <div>
+                <h2>🧼 Pipeline de Calidad</h2>
+                <p>Estrategias de limpieza, normalización de datos y tratamiento de outliers en sets masivos.</p>
+            </div>
+            <div class="tag-container">
+                <span class="tag">Data Integrity</span><span class="tag">ETL</span>
+            </div>
+        </a>
+
+        <a href="experiencia.html" class="card-link project-card">
+            <div>
+                <h2>🎯 UX & Sales Funnel</h2>
+                <p>Visualización del embudo de conversión y correlación entre rendimiento técnico y ventas.</p>
+            </div>
+            <div class="tag-container">
+                <span class="tag">Conversión</span><span class="tag">Marketing</span>
+            </div>
+        </a>
     </div>
 </body>
 </html>
