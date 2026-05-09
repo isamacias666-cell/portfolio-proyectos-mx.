@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoría de Logs | UX Analytics</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.0/echarts.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            padding: 40px 20px; min-height: 100vh; color: #333;
+        }
+        .container { max-width: 1300px; margin: 0 auto; }
+        
+        /* Encabezado Estilo Dashboard */
+        .header { background: white; padding: 30px; border-radius: 16px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); text-align: center; }
+        .header h1 { color: #2c5364; font-size: 32px; margin-bottom: 10px; }
+        .header p { color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Métricas de Performance */
+        .key-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .metric-card { 
+            background: white; padding: 25px; border-radius: 16px; text-align: center;
+            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-bottom: 5px solid #3498db;
+        }
+        .metric-card:hover { transform: translateY(-10px); }
+        .metric-label { color: #7f8c8d; font-size: 13px; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; display: block; }
+        .metric-value { font-size: 34px; font-weight: 800; color: #2c3e50; }
+
+        /* Grid de Gráficos */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 30px; }
+        .chart-card { background: white; padding: 25px; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+        .chart-title { color: #2c3e50; margin-bottom: 20px; font-size: 18px; font-weight: 700; border-left: 5px solid #f1c40f; padding-left: 15px; }
+        .chart-container { width: 100%; height: 380px; }
+
+        /* Sección de Hallazgos */
+        .insights-section { background: white; padding: 35px; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); }
+        .insights-title { font-size: 22px; color: #2c3e50; font-weight: 700; margin-bottom: 25px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .insights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        
+        .insight-box { border-left: 4px solid #f1c40f; padding-left: 20px; }
+        .insight-text { font-size: 16px; color: #333; margin-bottom: 12px; line-height: 1.5; }
+        .action-tag { 
+            background: #fff3e0; color: #e65100; padding: 10px 15px; border-radius: 8px; 
+            font-size: 14px; display: inline-block; font-weight: 600; border: 1px solid #ffe0b2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📡 UX Monitor: Análisis de Logs de Transacción</h1>
+            <p>Monitoreo de Latencia y Errores Críticos (Mayo 2026)</p>
+        </div>
+
+        <div class="key-metrics">
+            <div class="metric-card"><span class="metric-label">⏱️ Latencia Promedio</span><div class="metric-value">25.1s</div></div>
+            <div class="metric-card" style="border-bottom-color: #e74c3c;"><span class="metric-label">❌ Errores de Pago</span><div class="metric-value">1</div></div>
+            <div class="metric-card" style="border-bottom-color: #3498db;"><span class="metric-label">📱 Usuarios Mobile</span><div class="metric-value">75%</div></div>
+            <div class="metric-card" style="border-bottom-color: #9b59b6;"><span class="metric-label">🖥️ Sesiones Desktop</span><div class="metric-value">1</div></div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="chart-card"><div class="chart-title">Duración por Acción (Segundos)</div><div id="chart1" class="chart-container"></div></div>
+            <div class="chart-card"><div class="chart-title">Distribución por Dispositivo / OS</div><div id="chart2" class="chart-container"></div></div>
+            <div class="chart-card"><div class="chart-title">Alertas de Latencia por Usuario</div><div id="chart3" class="chart-container"></div></div>
+            <div class="chart-card"><div class="chart-title">Estado del Embudo (Actions)</div><div id="chart4" class="chart-container"></div></div>
+        </div>
+
+        <div class="insights-section">
+            <div class="insights-title">💡 Diagnóstico de Infraestructura</div>
+            <div class="insights-grid">
+                <div class="insight-box">
+                    <p class="insight-text"><strong>1. Latencia Crítica en Desktop (L4):</strong> El usuario 1030 experimentó un tiempo de carga de 120s en Windows 10, lo cual es inaceptable para un LOGIN.</p>
+                    <div class="action-tag"><strong>Acción:</strong> Auditar recursos del servidor para el cliente Desktop y validar scripts de carga en WIN10.</div>
+                </div>
+                <div class="insight-box" style="border-left-color: #e74c3c;">
+                    <p class="insight-text"><strong>2. Falla en Pasarela de Pago (L6):</strong> Se detectó un error `ERR_PAYMENT` inmediato (0s) para el usuario 1031 en Android.</p>
+                    <div class="action-tag"><strong>Acción:</strong> Revisar logs de la API de pagos para el ID L6; posible rechazo de token o caída de servicio[cite: 4].</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Duración por Acción
+        var c1 = echarts.init(document.getElementById('chart1'));
+        c1.setOption({
+            tooltip: { trigger: 'axis' },
+            xAxis: { type: 'category', data: ['Login (Avg)', 'View Prod', 'Logout'] },
+            yAxis: { type: 'value' },
+            series: [{
+                data: [32.5, 45, 1], 
+                type: 'bar',
+                itemStyle: { color: '#3498db' }
+            }]
+        });
+
+        // 2. Dispositivos (Dona)
+        var c2 = echarts.init(document.getElementById('chart2'));
+        c2.setOption({
+            tooltip: { trigger: 'item' },
+            series: [{
+                type: 'pie',
+                radius: ['40%', '70%'],
+                data: [
+                    { value: 3, name: 'IOS (Mobile)', itemStyle: { color: '#000000' } },
+                    { value: 3, name: 'Android (Mobile)', itemStyle: { color: '#3ddc84' } },
+                    { value: 1, name: 'WIN10 (Desktop)', itemStyle: { color: '#0078d7' } }
+                ]
+            }]
+        });
+
+        // 3. Scatter de Latencia por Usuario
+        var c3 = echarts.init(document.getElementById('chart3'));
+        c3.setOption({
+            xAxis: { name: 'User ID', min: 1028 },
+            yAxis: { name: 'Secs' },
+            series: [{
+                symbolSize: 20,
+                data: [[1029, 2], [1030, 120], [1031, 5], [1032, 3]],
+                type: 'scatter',
+                itemStyle: {
+                    color: function(p){ return p.data[1] > 60 ? '#e74c3c' : '#2ecc71'; }
+                }
+            }]
+        });
+
+        // 4. Embudo de Acciones
+        var c4 = echarts.init(document.getElementById('chart4'));
+        c4.setOption({
+            tooltip: { trigger: 'item' },
+            series: [{
+                type: 'funnel',
+                data: [
+                    { value: 4, name: 'LOGIN' },
+                    { value: 1, name: 'VIEW_PROD' },
+                    { value: 1, name: 'PAYMENT_ERR' },
+                    { value: 1, name: 'LOGOUT' }
+                ]
+            }]
+        });
+
+        window.onresize = function() { [c1, c2, c3, c4].forEach(c => c.resize()); };
+    </script>
+</body>
+</html>
